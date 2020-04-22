@@ -66,9 +66,4 @@ namespace ERPAPI.Models
         public DateTime? FechaCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
     }
-
-    public class InventoryTransferDTO : InventoryTransfer
-    {
-        public Kardex Kardex { get; set; } = new Kardex();
-    }
 }

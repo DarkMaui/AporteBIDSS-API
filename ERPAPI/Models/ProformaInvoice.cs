@@ -145,7 +145,6 @@ namespace ERPAPI.Models
 
     public class ProformaInvoiceDTO : ProformaInvoice
     {
-        public Kardex Kardex { get; set; } = new Kardex();
 
         public Guid Identificador { get; set; } 
     }

@@ -60,8 +60,6 @@ namespace ERPAPI.Models
         [Display(Name = "Usuario de modificación")]
         public string UsuarioModificacion { get; set; }
 
-        public List<ProductRelation> ProductRelation { get; set; }
-
     }
 
 

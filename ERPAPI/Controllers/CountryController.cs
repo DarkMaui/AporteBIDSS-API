@@ -146,25 +146,6 @@ namespace ERPAPI.Controllers
                         _Countryq = _Country;
                         _context.Country.Add(_Countryq);
                         await _context.SaveChangesAsync();
-
-                        await _context.SaveChangesAsync();
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _Country.Id,
-                            DocType = "Country",
-                            ClaseInicial =
-                              Newtonsoft.Json.JsonConvert.SerializeObject(_Country, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_Country, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insertar",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = _Country.Usuariocreacion,
-                            UsuarioModificacion = _Country.Usuariomodificacion,
-                            UsuarioEjecucion = _Country.Usuariomodificacion,
-
-                        });
-
-                        await _context.SaveChangesAsync();
                         transaction.Commit();
                     }
                     catch (Exception ex)
@@ -205,29 +186,7 @@ namespace ERPAPI.Controllers
                                            select c
                                  ).FirstOrDefaultAsync();
 
-                        _context.Entry(_Countryq).CurrentValues.SetValues((_Country));
-
-                        //_context.Country.Update(_Countryq);
-                        await _context.SaveChangesAsync();
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _Country.Id,
-                            DocType = "Country",
-                            ClaseInicial =
-                            Newtonsoft.Json.JsonConvert.SerializeObject(_Country, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_Country, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Update",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = _Country.Usuariocreacion,
-                            UsuarioModificacion = _Country.Usuariomodificacion,
-                            UsuarioEjecucion = _Country.Usuariomodificacion,
-
-                        });
-
-                        await _context.SaveChangesAsync();
-
+                        _context.Entry(_Countryq).CurrentValues.SetValues((_Country));                    
                         transaction.Commit();
 
                     }
@@ -269,27 +228,7 @@ namespace ERPAPI.Controllers
                           .FirstOrDefault();
 
                         _context.Country.Remove(_Countryq);
-                        await _context.SaveChangesAsync();
-
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _Country.Id,
-                            DocType = "Country",
-                            ClaseInicial =
-                                  Newtonsoft.Json.JsonConvert.SerializeObject(_Country, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_Country, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Update",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = _Country.Usuariocreacion,
-                            UsuarioModificacion = _Country.Usuariomodificacion,
-                            UsuarioEjecucion = _Country.Usuariomodificacion,
-
-                        });
-
-                        await _context.SaveChangesAsync();
-
+                        await _context.SaveChangesAsync();                      
                         transaction.Commit();
                     }
                     catch (Exception ex)
@@ -333,39 +272,12 @@ namespace ERPAPI.Controllers
                 {
                     flag = false;
                 }
-                //Vendor
-                var VariableVendor = _context.Vendor.Where(a => a.CountryId == _Country.Id)
-                                                    .FirstOrDefault();
-                if (VariableVendor != null)
-                {
-                    flag = false;
-                }
-                //GoodsReceived
-                var VariableGoodsReceived = _context.GoodsReceived.Where(a => a.CountryId == _Country.Id)
-                                                    .FirstOrDefault();
-                if (VariableGoodsReceived != null)
-                {
-                    flag = false;
-                }
+                
 
                 //State
                 var VariableState = _context.State.Where(a => a.CountryId == _Country.Id)
                                                     .FirstOrDefault();
                 if (VariableState != null)
-                {
-                    flag = false;
-                }
-                //BlackListCustomers
-                var VariableBlackListCustomers = _context.BlackListCustomers.Where(a => a.CountryId == _Country.Id)
-                                                    .FirstOrDefault();
-                if (VariableBlackListCustomers != null)
-                {
-                    flag = false;
-                }
-                //PEPS
-                var VariablePEPS = _context.PEPS.Where(a => a.CountryId == _Country.Id)
-                                                    .FirstOrDefault();
-                if (VariablePEPS != null)
                 {
                     flag = false;
                 }

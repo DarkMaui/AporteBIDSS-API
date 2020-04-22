@@ -168,7 +168,7 @@ namespace ERPAPI.Controllers
 
         // POST: api/Departamento
         [HttpPost("[action]")]
-        public async Task<ActionResult<Escala>> Insert([FromBody]Departamento _Departamento)
+        public async Task<ActionResult<Departamento>> Insert([FromBody]Departamento _Departamento)
         {
             Departamento _Departamentoq = new Departamento();
             try
@@ -215,25 +215,6 @@ namespace ERPAPI.Controllers
         private bool DepartamentoExists(long id)
         {
             return _context.Departamento.Any(e => e.IdDepartamento == id);
-        }
-        [HttpGet("[action]/{IdDepartamento}")]
-        public async Task<ActionResult<Int32>> ValidationDelete(int IdDepartamento)
-        {
-            try
-            {
-                //var Items = await _context.Product.CountAsync();
-                Int32 Items = await _context.BranchPorDepartamento.Where(a => a.IdDepartamento == IdDepartamento)
-                                    .CountAsync();
-                return await Task.Run(() => Ok(Items));
-
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Ocurrio un error: { ex.ToString() }");
-                return await Task.Run(() => BadRequest($"Ocurrio un error:{ex.Message}"));
-            }
-
         }
 
     }

@@ -32,7 +32,6 @@ namespace ERPAPI.Models
 
         public virtual List<Customer> Customer { get; set; }
         public virtual List<Branch> Branch { get; set; }
-        public virtual List<Vendor>Vendor { get; set; }
         public virtual List<Employees> Employees { get; set; }
     }
 }

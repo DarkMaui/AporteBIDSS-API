@@ -244,37 +244,6 @@ namespace ERPAPI.Controllers
             return await Task.Run(() => Ok(Items));
         }
 
-
-
-        [HttpPost("[action]")]
-        public async Task<ActionResult<SubProduct>> GetSubProductoByTipoByCustomer([FromBody]CustomerTypeSubProduct _CustomerTypeSubProduct)
-        {
-            List<SubProduct> Items = new List<SubProduct>();
-            try
-            {
-                List<Int64> SubProductsCustomer = (from c in _context.CustomerProduct
-                                                    .Where(q=>q.CustomerId == _CustomerTypeSubProduct.CustomerId)
-                                                    select c.SubProductId
-                                                    ).ToList();
-
-                Items = await _context.SubProduct
-                              .Where(q=> SubProductsCustomer.Contains(q.SubproductId))
-                              //.Where(q => q.ProductTypeId == _CustomerTypeSubProduct.ProductTypeId)
-                              .ToListAsync();
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Ocurrio un error: { ex.ToString() }");
-                return await Task.Run(() => BadRequest($"Ocurrio un error:{ex.Message}"));
-            }
-
-
-            return await Task.Run(() => Ok(Items));
-            //  
-        }
-
-
         [HttpPost("[action]")]
         public async Task<IActionResult> InsertSubproduct_ClassList([FromBody]List<SubProduct> SubProducts)
         {
@@ -333,13 +302,7 @@ namespace ERPAPI.Controllers
                                             .FirstOrDefaultAsync();
 
                 _context.SubProduct.Add(subProduct);
-                await  _context.SaveChangesAsync();
-                BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora { IdOperacion = subProduct.SubproductId,DocType="SubProducto" ,
-                    ClaseInicial = Newtonsoft.Json.JsonConvert.SerializeObject(_subproduct, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
-                    , Accion="Insertar" , FechaCreacion =DateTime.Now , FechaModificacion = DateTime.Now, UsuarioCreacion = _subproduct.UsuarioCreacion, UsuarioModificacion = _subproduct.UsuarioModificacion
-                    , UsuarioEjecucion = _subproduct.UsuarioModificacion,
-                    
-                });
+               
 
                 await _context.SaveChangesAsync();
             }

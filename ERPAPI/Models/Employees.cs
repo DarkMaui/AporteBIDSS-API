@@ -23,7 +23,6 @@ namespace ERPAPI.Models
 
         public long? IdTipoPlanilla { get; set; }
         [ForeignKey("IdTipoPlanilla")]
-        public TipoPlanillas TipoPlanilla { get; set; }
 
         public string BirthPlace { get; set; }
 
@@ -59,13 +58,11 @@ namespace ERPAPI.Models
 
         public Int64 IdBank { get; set; }
         [ForeignKey("IdBank")]
-        public Bank Bank { get; set; }
         public int IdBranch { get; set; }
         [ForeignKey("IdBranch")]
         public Branch Branch { get; set; }
         public long IdTipoContrato { get; set; }
         [ForeignKey("IdTipoContrato")]
-        public TipoContrato TipoContrato { get; set; }
         public long IdDepartamento { get; set; }
         [ForeignKey("IdDepartamento")]
         public Departamento Departamento { get; set; }
@@ -104,8 +101,6 @@ namespace ERPAPI.Models
 
         //public int? PartyId { get; set; }
         #region Associations
-
-        public List<EmployeeSalary> _EmployeeSalary { get; set; } = new List<EmployeeSalary>();
         #endregion
 
     }

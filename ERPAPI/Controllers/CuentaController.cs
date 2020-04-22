@@ -138,22 +138,7 @@ namespace ERPAPI.Controllers
                             UserId = ApplicationUserq.Id.ToString(),
                             PasswordHash = ApplicationUserq.PasswordHash,
                         });
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            // IdOperacion =,
-                            Descripcion = ApplicationUserq.Id.ToString(),
-                            DocType = "Usuario",
-                            ClaseInicial =
-                            Newtonsoft.Json.JsonConvert.SerializeObject(ApplicationUserq, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(ApplicationUserq, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "ChangePassword",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = ApplicationUserq.UsuarioCreacion,
-                            UsuarioModificacion = ApplicationUserq.UsuarioModificacion,
-                            UsuarioEjecucion = ApplicationUserq.UsuarioModificacion,
-
-                        });
+                        
 
                         //await _context.SaveChangesAsync();
                         await _context.SaveChangesAsync();

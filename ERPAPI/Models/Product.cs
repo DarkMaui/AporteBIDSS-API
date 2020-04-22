@@ -101,9 +101,5 @@ namespace ERPAPI.Models
 
         [Required]
         public DateTime FechaModificacion { get; set; }
-
-
-
-        public List<ProductRelation> ProductRelation { get; set; }
     }
 }

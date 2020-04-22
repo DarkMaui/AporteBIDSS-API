@@ -33,7 +33,6 @@ namespace ERPAPI.Models
 
         public Int64? VendorId { get; set; }
         [ForeignKey("VendorId")]
-        public Vendor Vendor { get; set; }
 
         public string VendorName { get; set; }
 
@@ -114,8 +113,4 @@ namespace ERPAPI.Models
         
     }
 
-    public class PurchaseOrderDTO : PurchaseOrder
-    {
-        public Kardex Kardex { get; set; } = new Kardex();
-    }
 }

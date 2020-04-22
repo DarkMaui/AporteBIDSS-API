@@ -205,13 +205,7 @@ namespace ERPAPI.Controllers
                 {
                     flag = false;
                 }
-                //Customer
-                var VariableCustomersOfCustomer = _context.CustomersOfCustomer.Where(a => a.CustomerTypeId == _CustomerType.CustomerTypeId)
-                                                    .FirstOrDefault();
-                if (VariableCustomersOfCustomer != null)
-                {
-                    flag = false;
-                }
+              
 
                 if (flag)
                 {

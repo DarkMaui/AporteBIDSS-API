@@ -166,7 +166,7 @@ namespace ERPAPI.Controllers
             Employees Items = new Employees();
             try
             {
-                Items = await _context.Employees.Include(c => c.Bank)
+                Items = await _context.Employees
                                                 .Include(c => c.Branch)
                                                 .Include(c => c.City)
                                                 .Include(c => c.Country)

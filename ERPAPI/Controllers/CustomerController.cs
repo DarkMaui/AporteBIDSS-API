@@ -177,23 +177,7 @@ namespace ERPAPI.Controllers
                         _context.Customer.Add(customer);
                         await _context.SaveChangesAsync();
 
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = customer.CustomerId,
-                            DocType = "Customer",
-                            ClaseInicial =
-                             Newtonsoft.Json.JsonConvert.SerializeObject(payload, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado =
-                             Newtonsoft.Json.JsonConvert.SerializeObject(customer, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insertar",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = payload.UsuarioCreacion,
-                            UsuarioModificacion = payload.UsuarioModificacion,
-                            UsuarioEjecucion = payload.UsuarioModificacion,
-                        });
-
-                        await _context.SaveChangesAsync();
+                       
 
                         transaction.Commit();
 
@@ -253,23 +237,7 @@ namespace ERPAPI.Controllers
                         _context.Entry(customerq).CurrentValues.SetValues((_customer));
                         await _context.SaveChangesAsync();
 
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _customer.CustomerId,
-                            DocType = "Customer",
-                            ClaseInicial =
-                               Newtonsoft.Json.JsonConvert.SerializeObject(customerq, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_customer, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Update",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = _customer.UsuarioCreacion,
-                            UsuarioModificacion = _customer.UsuarioModificacion,
-                            UsuarioEjecucion = _customer.UsuarioModificacion,
-
-                        });
-
-                        await _context.SaveChangesAsync();
+                       
                         transaction.Commit();
                     }
                     catch (Exception ex)
@@ -320,53 +288,6 @@ namespace ERPAPI.Controllers
            
 
         }
-
-        // GET: api/Vendors/GetPurchaseByVendorId
-        /// <summary>
-        ///   Obtiene el listado de Productos por Proveedor.        
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("[action]/{CustomerId}")]
-        public async Task<IActionResult> GetPurchaseByCustomerId(Int64 CustomerId)
-        {
-            try
-            {
-                var ContratoItems = await (from c in _context.Contrato
-                                           join b in _context.Branch on c.BranchId equals b.BranchId
-                                           where c.CustomerId == CustomerId
-                                           select new Contrato
-                                           {
-                                               ContratoId = c.ContratoId,
-                                               BranchId = c.BranchId,
-                                               TotalContrato = c.TotalContrato,
-                                               Branch = b,
-                                               Fecha = c.Fecha,
-                                               FechaModificacion = c.FechaModificacion,
-                                               NombreEstado = c.NombreEstado
-                                           }).ToListAsync();
-
-                var ProfromaInvoiceItems = await (from c in _context.ProformaInvoice
-                                                  join b in _context.Branch on c.BranchId equals b.BranchId
-                                                  where c.CustomerId == CustomerId
-                                                  select new Contrato
-                                                  {
-                                                      ContratoId = c.ProformaId,
-                                                      BranchId = Convert.ToInt32(c.BranchId),
-                                                      Branch = b,
-                                                      TotalContrato = c.Total,
-                                                      Fecha = c.OrderDate,
-                                                      FechaModificacion = c.FechaModificacion,
-                                                      NombreEstado = c.Estado
-                                                  }).ToListAsync();
-
-                ContratoItems.AddRange(ProfromaInvoiceItems);
-                return await Task.Run(() => Ok(ContratoItems));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Ocurrio un error: { ex.ToString() }");
-                return BadRequest($"Ocurrio un error:{ex.Message}");
-            }
-        }
+       
     }
 }

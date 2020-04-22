@@ -149,9 +149,5 @@ namespace ERPAPI.Models
         [Required]
         public DateTime FechaModificacion { get; set; }
 
-        public List<CustomersOfCustomer> _Customers { get; set; }
-
-        public List<VendorOfCustomer> _Vendor { get; set; }
-
     }
 }
