@@ -205,9 +205,15 @@ namespace ERPAPI.Controllers
                     try
                     {
                         _context.Employees.Add(Employees);
+<<<<<<< HEAD
                         //await _context.SaveChangesAsync();
                         
                         await _context.SaveChangesAsync();
+=======
+                      
+                        await _context.SaveChangesAsync();
+
+>>>>>>> 0e66eba6c21d89e17da56a94cfadba2a180b247f
                         transaction.Commit();
                     }
                     catch (Exception ex)
