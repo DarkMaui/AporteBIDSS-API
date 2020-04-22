@@ -205,31 +205,7 @@ namespace ERPAPI.Controllers
                     try
                     {
                         _context.Employees.Add(Employees);
-                        //await _context.SaveChangesAsync();
-                        foreach (var item in _Employees._EmployeeSalary)
-                        {
-                            item.IdEmpleado = _Employees.IdEmpleado;
-                            _context.EmployeeSalary.Add(item);
-                        }
-                        await _context.SaveChangesAsync();
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = Employees.IdEmpleado,
-                            DocType = "Employees",
-
-                            ClaseInicial =
-                             Newtonsoft.Json.JsonConvert.SerializeObject(_Employees, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(Employees, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insert",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = Employees.Usuariocreacion,
-                            UsuarioModificacion = Employees.Usuariomodificacion,
-                            UsuarioEjecucion = Employees.Usuariomodificacion,
-
-                        });
-
+                      
                         await _context.SaveChangesAsync();
 
                         transaction.Commit();
