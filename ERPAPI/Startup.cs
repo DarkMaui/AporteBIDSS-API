@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ERP.Contexts;
 using ERPAPI.Models;
-using ERPAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,7 +49,7 @@ namespace ERPAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<HashService>();
+            
             services.AddDataProtection();
 
             services.AddDbContext<ApplicationDbContext>(options =>

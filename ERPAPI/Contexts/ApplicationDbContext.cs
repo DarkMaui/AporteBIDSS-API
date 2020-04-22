@@ -126,15 +126,7 @@ namespace ERP.Contexts
             .HasIndex(e => e.NombreDepartamento)
             .IsUnique(true);
 
-            modelBuilder.Entity<SubProduct>()
-             .HasMany(c => c.ProductRelation)
-             .WithOne(e => e.SubProduct)
-             .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Product>()
-           .HasMany(c => c.ProductRelation)
-           .WithOne(e => e.Product)
-           .OnDelete(DeleteBehavior.Restrict);
+            
 
             modelBuilder.Entity<Customer>()
                  .HasOne(i => i.Departamento)
