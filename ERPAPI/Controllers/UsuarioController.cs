@@ -227,25 +227,6 @@ namespace ERPAPI.Controllers
                         });
 
                         await _context.SaveChangesAsync();
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            // IdOperacion =,
-                            Descripcion = _usuario.Id.ToString(),
-                            DocType = "Usuario",
-                            ClaseInicial =
-                              Newtonsoft.Json.JsonConvert.SerializeObject(_usuario, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_usuario, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "PostUsuario",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = _usuario.UsuarioCreacion,
-                            UsuarioModificacion = _usuario.UsuarioModificacion,
-                            UsuarioEjecucion = _usuario.UsuarioModificacion,
-
-                        });
-
-                        await _context.SaveChangesAsync();
                         transaction.Commit();
                     }
                     catch (Exception ex)
@@ -379,25 +360,6 @@ namespace ERPAPI.Controllers
                         PasswordHash = _newpass.PasswordHash,
                     });
                     usuarioActualizar.LastPasswordChangedDate = DateTime.Now;
-                    await _context.SaveChangesAsync();
-
-                    BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                    {
-                        // IdOperacion =,
-                        Descripcion = usuarioActualizar.Id.ToString(),
-                        DocType = "Usuario",
-                        ClaseInicial =
-                             Newtonsoft.Json.JsonConvert.SerializeObject(_newpass, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_newpass, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        Accion = "ChangePassword",
-                        FechaCreacion = DateTime.Now,
-                        FechaModificacion = DateTime.Now,
-                        UsuarioCreacion = usuarioActualizar.UsuarioCreacion,
-                        UsuarioModificacion = usuarioActualizar.UsuarioModificacion,
-                        UsuarioEjecucion = usuarioActualizar.UsuarioModificacion,
-
-                    });
-
                     await _context.SaveChangesAsync();
 
                     return await Task.Run(() => _newpass);

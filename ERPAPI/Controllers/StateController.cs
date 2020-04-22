@@ -191,24 +191,6 @@ namespace ERPAPI.Controllers
                         _Stateq = _State;
                         _context.State.Add(_Stateq);
                         await _context.SaveChangesAsync();
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _Stateq.Id,
-                            DocType = "Customer",
-                            ClaseInicial =
-                                Newtonsoft.Json.JsonConvert.SerializeObject(_Stateq, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_State, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insert",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            //UsuarioCreacion = _State.UsuarioCreacion,
-                            //UsuarioModificacion = _State.UsuarioModificacion,
-                            //UsuarioEjecucion = _State.UsuarioModificacion,
-
-                        });
-
-                        await _context.SaveChangesAsync();
                         transaction.Commit();
                     }
                     catch (Exception ex)
@@ -249,22 +231,6 @@ namespace ERPAPI.Controllers
                                  .Where(q => q.Id == _State.Id)
                                          select c
                                 ).FirstOrDefaultAsync();
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _Stateq.Id,
-                            DocType = "Customer",
-                            ClaseInicial =
-                                       Newtonsoft.Json.JsonConvert.SerializeObject(_Stateq, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_State, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insert",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            //UsuarioCreacion = _State.UsuarioCreacion,
-                            //UsuarioModificacion = _State.UsuarioModificacion,
-                            //UsuarioEjecucion = _State.UsuarioModificacion,
-
-                        });
 
                         _context.Entry(_Stateq).CurrentValues.SetValues((_State));
 
@@ -310,24 +276,6 @@ namespace ERPAPI.Controllers
                           .FirstOrDefault();
 
                         _context.State.Remove(_Stateq);
-                        await _context.SaveChangesAsync();
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _Stateq.Id,
-                            DocType = "Customer",
-                            ClaseInicial =
-                                     Newtonsoft.Json.JsonConvert.SerializeObject(_Stateq, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_State, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insert",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            //UsuarioCreacion = _State.UsuarioCreacion,
-                            //UsuarioModificacion = _State.UsuarioModificacion,
-                            //UsuarioEjecucion = _State.UsuarioModificacion,
-
-                        });
-
                         await _context.SaveChangesAsync();
                         transaction.Commit();
                     }

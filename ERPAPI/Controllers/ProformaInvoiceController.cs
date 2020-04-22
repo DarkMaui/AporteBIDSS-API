@@ -182,46 +182,6 @@ namespace ERPAPI.Controllers
         }
 
 
-        [HttpGet("[action]/{ProformaInvoiceId}")]
-        public async Task<IActionResult> GetInvoiceCalculation(Int64 ProformaInvoiceId)
-        {
-            List< InvoiceCalculation> Items = new List<InvoiceCalculation>();
-            try
-            {
-                Items = await _context.InvoiceCalculation.Where(q => q.ProformaInvoiceId == ProformaInvoiceId).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Ocurrio un error: { ex.ToString() }");
-                return await Task.Run(() => BadRequest($"Ocurrio un error:{ex.Message}"));
-            }
-
-
-            return await Task.Run(() => Ok(Items));
-        }
-
-
-        [HttpGet("[action]/{Identificador}")]
-        public async Task<IActionResult> GetInvoiceCalculationByIdentificador(Guid Identificador)
-        {
-            List<InvoiceCalculation> Items = new List<InvoiceCalculation>();
-            try
-            {
-                Items = await _context.InvoiceCalculation.Where(q => q.Identificador == Identificador).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Ocurrio un error: { ex.ToString() }");
-                return await Task.Run(() => BadRequest($"Ocurrio un error:{ex.Message}"));
-            }
-
-
-            return await Task.Run(() => Ok(Items));
-        }
-
-
-
-
 
         [HttpPost("[action]")]
         public async Task<ActionResult<ProformaInvoice>> InsertWithInventory([FromBody]ProformaInvoiceDTO _ProformaInvoice)
@@ -268,25 +228,6 @@ namespace ERPAPI.Controllers
                             _context.ProformaInvoiceLine.Add(item);
                            // _context.KardexViale.Add(kardexViale);
                         }
-
-                        await _context.SaveChangesAsync();
-
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _ProformaInvoice.CustomerId,
-                            DocType = "ProformaInvoice",
-                            ClaseInicial =
-                              Newtonsoft.Json.JsonConvert.SerializeObject(_ProformaInvoice, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_ProformaInvoice, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insert",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = _ProformaInvoice.UsuarioCreacion,
-                            UsuarioModificacion = _ProformaInvoice.UsuarioModificacion,
-                            UsuarioEjecucion = _ProformaInvoice.UsuarioModificacion,
-
-                        });
 
                         await _context.SaveChangesAsync();
 
@@ -346,31 +287,7 @@ namespace ERPAPI.Controllers
                         _context.Entry(_ProformaInvoiceq).CurrentValues.SetValues((_ProformaInvoice));
 
                         await _context.SaveChangesAsync();
-
-                        //   if(_ProformaInvoice.Identificador!="")
-                        var calculo =await _context.InvoiceCalculation.Where(q => q.Identificador == _ProformaInvoice.Identificador).ToListAsync();
-                         calculo.ForEach(q => q.ProformaInvoiceId = _ProformaInvoice.ProformaId);
-
-                        await _context.SaveChangesAsync();
-
-
-                        BitacoraWrite _write = new BitacoraWrite(_context, new Bitacora
-                        {
-                            IdOperacion = _ProformaInvoice.CustomerId,
-                            DocType = "ProformaInvoice",
-                            ClaseInicial =
-                              Newtonsoft.Json.JsonConvert.SerializeObject(_ProformaInvoice, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            ResultadoSerializado = Newtonsoft.Json.JsonConvert.SerializeObject(_ProformaInvoice, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                            Accion = "Insert",
-                            FechaCreacion = DateTime.Now,
-                            FechaModificacion = DateTime.Now,
-                            UsuarioCreacion = _ProformaInvoice.UsuarioCreacion,
-                            UsuarioModificacion = _ProformaInvoice.UsuarioModificacion,
-                            UsuarioEjecucion = _ProformaInvoice.UsuarioModificacion,
-
-                        });
-
-                        await _context.SaveChangesAsync();
+                       
 
                         transaction.Commit();
                     }
