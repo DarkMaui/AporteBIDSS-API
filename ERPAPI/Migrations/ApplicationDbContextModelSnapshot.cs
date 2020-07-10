@@ -7080,8 +7080,6 @@ namespace ERPAPI.Migrations
 
                     b.Property<long?>("ProductTypeId");
 
-                    b.Property<bool>("Regalia");
-
                     b.Property<string>("Serie")
                         .HasMaxLength(50);
 
